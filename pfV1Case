@@ -1,0 +1,12 @@
+#!/bin/bash
+echo "Anzeige der Datei processlist_$(date +%F) mit den aktuell laufenden Prozessen und dem String '$1'" >> processlist_$(date +%F)
+while getops ':hn:' OPTION
+do
+    case "$OPTIONS" in
+        h) ps -ef | head -1  >> processlist_$(date +%F)
+        n)ps -e | grep '$1' >> processlist_$(date +%F)
+        exit;;
+        \?) echo "invalid option - echt?"
+        exit;; 
+    esac
+done

@@ -1,0 +1,11 @@
+#!/bin/bash
+echo "Anzeige der Datei processlist_$(date +%F) mit den aktuell laufenden Prozessen und dem String '$1'" >> processlist_$(date +%F)
+case "$1" in
+        h) ps -ef | head -1  >> processlist_$(date +%F)
+        ps -e | grep '$3' >> processlist_$(date +%F)
+        exit;;
+        n)ps -e | grep '$2' >> processlist_$(date +%F)
+        exit;;
+        \?) echo "invalid option - echt?"
+        exit;; 
+    esac
