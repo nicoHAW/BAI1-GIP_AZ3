@@ -1,13 +1,43 @@
 #!/bin/bash
-echo "Anzeige der Datei processlist_$(date +%F) mit den aktuell laufenden Prozessen und dem String '$1'" >> processlist_$(date +%F)
-while getops ':hn:' OPTION
+#Innitilise variables
+header=false
+process=""
+
+while getopts ':hn:' OPTION
 do
-    case "$OPTIONS" in
-        h) ps -ef | head -1  >> processlist_$(date +%F)
-        exit;;
-        n)ps -e | grep '$1' >> processlist_$(date +%F)
-        exit;;
-        \?) echo "invalid option - echt?"
-        exit;; 
-    esac
-done
+	case ${OPTION} in
+		h) header=true
+		;;
+		n) process=${OPTARG}
+		;;
+		\?) echo "invalid option - echt?"
+		;;	
+	esac
+done	
+	
+if [ -z "$process" ]
+then
+	echo "Pleaser enter String to filter search results"
+fi
+
+outputfile=processlist_$(date +%F)
+
+if $header
+	then
+		ps -a | head -1  > $outputfile
+		ps -a | grep ${process} >> $outputfile
+	else
+		ps -a | grep ${process} > $outputfile
+fi
+
+today=$(date +%d-%m-%Y)
+
+echo ""
+if $header
+	then
+		echo "Alle aktuellen laufenden Prozesse am $today mit Header und dem Suchstring "$process"."
+	else
+		echo "Alle aktuellen laufenden Prozesse am $today ohne Header und dem Suchstring "$process"."
+fi
+echo ""
+more $outputfile
