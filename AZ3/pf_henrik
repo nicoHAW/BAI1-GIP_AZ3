@@ -1,0 +1,34 @@
+#!/bin/bash
+# -h for head from processlist
+# -n for namesearch in processlist
+ish=false
+isn=false
+regEx=""
+while getopts ':hn:' OPTION
+do
+        case "$OPTION" in
+                h)      ish=true
+                        ;;
+                n)      isn=true
+                        regEx="$OPTARG"
+                        break;;
+        esac
+done
+date=$(date)
+touch "processlist_$date"
+filename="processlist_$date"
+echo "Anzeige der Liste der Prozesse aus der Datei $filename"
+if $isn; then
+        echo "welche den String '"'$regEx'"' enthalten."
+fi
+
+if $ish; then
+        ps | head -n 1
+fi
+
+if $isn; then
+        ps | tail -n +2| grep "$regEx" > "$filename"
+else
+        ps | tail -n +2 > "$filename"
+fi
+cat "$filename"
