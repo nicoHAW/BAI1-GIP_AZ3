@@ -1,0 +1,13 @@
+GI Aufgabenzettel 3
+
+Aufgabe 5
+5.1 "$ls"
+5.2 "$ls -la"
+5.3 "$date > heute"
+5.4 "$pstree -p> prozessbaum"
+5.5 "$more prozessbaum"
+5.6 "$ls -a p*"
+5.7 "$mkdir meindir"
+5.8 "$cp prozessbaum meindir/"
+5.9 "$find . p*"
+5.10 "$cd meindir/ | cp prozessbaum 'Neuer Prozessbaum'"
