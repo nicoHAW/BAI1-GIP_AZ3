@@ -1,0 +1,58 @@
+#!/bin/bash
+
+#Initialisiere zwei variablen: header als boolean und process leer. 
+header=false
+process=""
+
+#Initialisierung und Deklarierung der Variable today mit heutigem datum in europäischer form.
+today=$(date +%d-%m-%Y)
+
+#liest Optioenen und über gibt diese in die Variable "OPTION"
+while getopts ':hn:' OPTION
+do
+	case ${OPTION} in
+		h) header=true #setzt die Variable header auf tue, wenn Option h angegeben. 
+		;;
+		n) process=${OPTARG} #liest den String, der bei option nach n: angegeben ist und schreibt diesen in die Variable process
+		;;
+		\?) echo "invalid option - echt?" #default Rückgabewert, wenn nichts angegeben wird. 
+		;;	
+	esac
+done	
+
+#wenn der String Process leer ist, dann wird die Fehlermeldung ausgegeben. 
+if [ -z "$process" ]
+then
+	echo "Pleaser enter String to filter search results"
+fi
+
+#setzt die Variable mit einem Namen und einer Varibale zur erzeugung des Datums gleich. 
+outputfile=processlist_$(date +%F)
+
+todayHeader="################################## -- $today -- ############################################ \n \n"
+
+#definiert: wenn die variable header true, dann schreibt der den header und den inhalt in die outputfile, sonst nur den inhalt. 
+if $header
+	then
+		echo -e $todayHeader > $outputfile
+		ps -a | head -1  > $outputfile
+		ps -a | grep ${process} >> $outputfile #grep ${process} holt sich variable process und liest den inhalt aus.
+	else
+		echo -e $todayHeader > $outputfile
+		ps -a | grep ${process} > $outputfile
+fi
+
+echo ""
+if $header
+	then
+		echo -e $todayHeader
+		echo "Alle aktuellen laufenden Prozesse am $today MIT Header und dem Suchstring "$process"."
+		echo ""
+		
+	else
+		echo -e $todayHeader
+		echo "Alle aktuellen laufenden Prozesse am $today OHNE Header und dem Suchstring "$process"."
+		echo ""
+fi
+echo ""
+more $outputfile
