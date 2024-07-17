@@ -1,0 +1,268 @@
+<!--
+
+URL zum Testen: 
+https://www.freeformatter.com/xpath-tester.html
+
+
+SYNTAX:
+/                -> root Verzeichnis -> aber auch direkter Kind-Knoten
+/mediathek/dvd  -> jetzt im Verzeichnis /mediathek/dvd -> Ausgabe alle dvd Elemente in der mediathek
+
+//               -> alle Nachkommen eines knotens, auch wenn tiefer verschachtelt.
+//titel          -> zeigt alle titel sowohl in /mediathek/dvd/titel, also auch in /mediathek/buch/titel 
+
+*                -> wählt alle Kinder unabhängig vom Namen aus.
+/mediathek*      -> alle Elemente Medien unter mediathek
+/mediathek/dvd*      -> alle Elemente Medien unter dvd -> interessant der Unterschied zu /mediathek*
+
+@                 -> adressiert Attribute -> z.B. @id adressiert id-Attribut in <dvd id="222"> muss denoch richtig angesprochen werden.
+
+
+
+SPANNENDE BEFEHLE & AUSGABEN: 
+
+/mediathek/dvd      -> alle Elemente unter DVD  = //dvd
+//dvd               -> alle Elemente unter DVD  = mediathek/dvd
+
+//dvd[ @id ]        -> Ausgabe aller DVDs mit Attribut id im DVD Element also <dvd id="23">
+//dvd/@id           -> Ausgabe aller ids von DVD mit id Attribut. 
+                    -> wichtig zu wissen bei @ -> adressiert ein Attribut. 
+
+//dvd[regisseur='Quentin Tarantino']    -> alle DVDs und alle Elemente der DVDs mit Regisseur = Quentin Tarantino.
+
+
+
+//dvd/regisseur/text() -> nur den text: "Peter Jackson"
+
+//dvd/regisseur     -> Ausgabe: Ganzes Elemente: <regisseur>Peter Jackson</regisseur>
+
+
+AUSGABE: 
+letztes Element definiert Ausgabe bsp. 
+/mediathek/dvd         -> alle Elemente unterhalb von dvd
+/mediathek/dvd/text()  -> nur Texte der Elemente ohne ElementTag
+/mediathek/dvd/titel   -> alle Elemente unterhalb von dvd
+/mediathek/dvd/titel/text()  -> nur Texte der Elemente ohne ElementTag
+
+
+#########  TO DEEP  ##########
+//dvd[//regisseur="Peter Jackson" or //sprache/@language="deutsch"]      ->  oder verknüpfung von PJ oder deutsch ... auf // achten.
+//dvd[regisseur="Peter Jackson" and sprache/@language="deutsch"]         ->  oder verknüpfung von PJ oder deutsch ... auf // achten.
+-> da regisseur eine Ebene unter DVD, keine '//' , aber da language innerhalb von Sprache 'Sprache/@language'
+-> Theoretisch geht auch:    //dvd[regisseur="Peter Jackson" and */@language="deutsch"]  ... 
+//dvd[regisseur="Peter Jackson" and */@language="deutsch"]/titel -> Ausgabe nur des Titels. 
+
+-->
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<mediathek>
+    <dvd id="1001">
+        <titel>Der Herr der Ringe: Die Gefährten</titel>
+        <regisseur>Peter Jackson</regisseur>
+        <genre>Fantasy</genre>
+        <jahr>2001</jahr>
+        <spieldauer>178</spieldauer>
+        <discs>
+           <disc nummer=1>Film</disceins>
+           <disc nummer=2>Bonusmaterial</disczwei>
+        </discs>    
+        <sprache language="deutsch" />
+    </dvd>
+
+    <dvd id="1001">
+        <titel>The Herr of the Ringe: Die Walkdriver</titel>
+        <regisseur>Peter Jackson</regisseur>
+        <genre>Fantasy</genre>
+        <jahr>2001</jahr>
+        <spieldauer>178</spieldauer>
+        <sprache language="englisch" />
+    </dvd>
+
+    <dvd id="2005">
+        <titel>Harry Potter und der Stein der Weisen</titel>
+        <regisseur>Chris Columbus</regisseur>
+        <genre>Fantasy</genre>
+        <jahr>2001</jahr>
+         <sprache language="deutsch" />
+    </dvd>
+
+    <dvd id="1002">
+        <titel>Pulp Fiction</titel>
+        <regisseur>Quentin Tarantino</regisseur>
+        <genre>Krimi</genre>
+        <jahr>1994</jahr>
+        <spieldauer>154</spieldauer>
+         <sprache language="deutsch" />
+    </dvd>
+
+    <dvd id="1003">
+        <titel>Inception</titel>
+        <regisseur>Christopher Nolan</regisseur>
+        <genre>Science Fiction</genre>
+        <jahr>2010</jahr>
+        <spieldauer>148</spieldauer>
+         <sprache language="deutsch" />
+    </dvd>
+
+    <buch id="2001">
+        <titel>Der Name der Rose</titel>
+        <autor>Umberto Eco</autor>
+        <genre>Historischer Roman</genre>
+        <jahr>1980</jahr>
+        <seiten>512</seiten>
+        <sprache language="deutsch" />
+    </buch>
+
+    <buch id="2002">
+        <titel>Stolz und Vorurteil</titel>
+        <autor>Jane Austen</autor>
+        <genre>Roman</genre>
+        <jahr>1813</jahr>
+        <seiten>432</seiten>
+    </buch>
+
+    <buch id="2003">
+        <titel>1984</titel>
+        <autor>George Orwell</autor>
+        <genre>Dystopie</genre>
+        <jahr>1949</jahr>
+        <seiten>328</seiten>
+    </buch>
+
+    <comic id="3001">
+        <titel>Watchmen</titel>
+        <autor>Alan Moore</autor>
+        <zeichner>Dave Gibbons</zeichner>
+        <verlag>DC Comics</verlag>
+        <jahr>1986</jahr>
+        <ausgabe>1</ausgabe>
+         <sprache language="deutsch" />
+    </comic>
+
+    <comic id="3001">
+        <titel>Watchmen</titel>
+        <autor>Alan Moore</autor>
+        <zeichner>Dave Gibbons</zeichner>
+        <verlag>DC Comics</verlag>
+        <jahr>1986</jahr>
+        <ausgabe>1</ausgabe>
+         <sprache language="englisch" />
+    </comic>
+
+    <dvd id="3001">
+        <titel>Watchmen</titel>
+        <regisseur>Zack Snyder</regisseur>
+        <jahr>2005</jahr>
+         <sprache language="deutsch" />
+    </dvd>
+
+    <comic id="3002">
+        <titel>Maus</titel>
+        <autor>Art Spiegelman</autor>
+        <verlag>Pantheon Books</verlag>
+        <jahr>1991</jahr>
+        <ausgabe>1</ausgabe>
+         <sprache language="deutsch" />
+    </comic>
+
+    <comic id="3003">
+        <titel>Sandman: Präludien und Notturni</titel>
+        <autor>Neil Gaiman</autor>
+        <zeichner>Sam Kieth</zeichner>
+        <verlag>DC Comics</verlag>
+        <jahr>1989</jahr>
+        <ausgabe>1</ausgabe>
+         <sprache language="deutsch" />
+    </comic>
+
+    <cd id="4001">
+        <titel>The Dark Side of the Moon</titel>
+        <interpret>Pink Floyd</interpret>
+        <genre>Progressive Rock</genre>
+        <jahr>1973</jahr>
+    </cd>
+
+    <cd id="4002">
+        <titel>Abbey Road</titel>
+        <interpret>The Beatles</interpret>
+        <genre>Rock</genre>
+        <jahr>1969</jahr>
+    </cd>
+
+    <cd id="4003">
+        <titel>Nevermind</titel>
+        <interpret>Nirvana</interpret>
+        <genre>Grunge</genre>
+        <jahr>1991</jahr>
+    </cd>
+
+    <dvd id="1004">
+        <titel>The Shawshank Redemption</titel>
+        <regisseur>Frank Darabont</regisseur>
+        <genre>Drama</genre>
+        <jahr>1994</jahr>
+        <spieldauer>142</spieldauer>
+         <sprache language="deutsch" />
+    </dvd>
+
+    <buch id="2004">
+        <titel>Der kleine Prinz</titel>
+        <autor>Antoine de Saint-Exupéry</autor>
+        <genre>Kinderbuch</genre>
+        <jahr>1943</jahr>
+        <seiten>96</seiten>
+         <sprache language="deutsch" />
+    </buch>
+
+    <comic id="3004">
+        <titel>V wie Vendetta</titel>
+        <autor>Alan Moore</autor>
+        <zeichner>David Lloyd</zeichner>
+        <verlag>DC Comics</verlag>
+        <jahr>1982</jahr>
+        <ausgabe>1</ausgabe>
+         <sprache language="deutsch" />
+    </comic>
+
+    <cd id="4004">
+        <titel>Thriller</titel>
+        <interpret>Michael Jackson</interpret>
+        <genre>Pop</genre>
+        <jahr>1982</jahr>
+    </cd>
+
+    <dvd id="1005">
+        <titel>The Matrix</titel>
+        <regisseur>Lana Wachowski, Lilly Wachowski</regisseur>
+        <genre>Science Fiction</genre>
+        <jahr>1999</jahr>
+        <spieldauer>136</spieldauer>
+         <sprache language="deutsch" />
+    </dvd>
+
+    <buch id="2005">
+        <titel>Harry Potter und der Stein der Weisen</titel>
+        <autor>J.K. Rowling</autor>
+        <genre>Fantasy</genre>
+        <jahr>1997</jahr>
+        <seiten>309</seiten>
+         <sprache language="deutsch" />
+    </buch>
+
+    <comic id="3005">
+        <titel>Persepolis</titel>
+        <autor>Marjane Satrapi</autor>
+        <verlag>L'Association</verlag>
+        <jahr>2000</jahr>
+        <ausgabe>1</ausgabe>
+         <sprache language="deutsch" />
+    </comic>
+
+    <cd id="4005">
+        <titel>Rumours</titel>
+        <interpret>Fleetwood Mac</interpret>
+        <genre>Soft Rock</genre>
+        <jahr>1977</jahr>
+    </cd>
+</mediathek>
