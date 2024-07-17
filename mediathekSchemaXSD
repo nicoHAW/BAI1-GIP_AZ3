@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="mediathek">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="dvd" type="dvdType" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="buch" type="buchType" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="comic" type="comicType" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="cd" type="cdType" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="dvdType">
+        <xs:sequence>
+            <xs:element name="titel" type="xs:string" />
+            <xs:element name="regisseur" type="xs:string" />
+            <xs:element name="genre" type="xs:string" />
+            <xs:element name="jahr" type="xs:integer" />
+            <xs:element name="spieldauer" type="xs:integer" />
+            <xs:element name="sprache" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:integer" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="buchType">
+        <xs:sequence>
+            <xs:element name="titel" type="xs:string" />
+            <xs:element name="autor" type="xs:string" />
+            <xs:element name="genre" type="xs:string" />
+            <xs:element name="jahr" type="xs:integer" />
+            <xs:element name="seiten" type="xs:integer" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:integer" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="comicType">
+        <xs:sequence>
+            <xs:element name="titel" type="xs:string" />
+            <xs:element name="autor" type="xs:string" />
+            <xs:element name="zeichner" type="xs:string" />
+            <xs:element name="verlag" type="xs:string" />
+            <xs:element name="jahr" type="xs:integer" />
+            <xs:element name="ausgabe" type="xs:integer" />
+            <xs:element name="sprache" type="xs:string" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:integer" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="cdType">
+        <xs:sequence>
+            <xs:element name="titel" type="xs:string" />
+            <xs:element name="interpret" type="xs:string" />
+            <xs:element name="genre" type="xs:string" />
+            <xs:element name="jahr" type="xs:integer" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:integer" use="required" />
+    </xs:complexType>
+</xs:schema>
